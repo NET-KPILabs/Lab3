@@ -1,31 +1,32 @@
-﻿using Lab3.Implementation.Civilizations.Rome;
+﻿using Lab3.Abstract.Civilization;
+using Lab3.Implementation.Civilizations.Rome;
 
 var romeInfrastructureCivilizationFactory = new RomeCivilizationInfrastructureFactory();
-var romeCivilizationFactory = new RomeCivilizationFactory(romeInfrastructureCivilizationFactory);
-var civilization = romeCivilizationFactory.CreateCivilization();
-civilization.InitializeDefaultValues();
+var romeCivilization = new Civilization(romeInfrastructureCivilizationFactory);
+
+romeCivilization.InitializeDefaultValues();
 
 Console.WriteLine("Rome civilization:");
 Console.WriteLine("Units:");
-foreach (var unit in civilization.Units)
+foreach (var unit in romeCivilization.Units)
 {
     Console.WriteLine(unit);
 }
 
 Console.WriteLine("Territories:");
-foreach (var territory in civilization.Territories)
+foreach (var territory in romeCivilization.Territories)
 {
     Console.WriteLine(territory);
 }
 
 Console.WriteLine("Finances:");
-Console.WriteLine(civilization.Finances);
+Console.WriteLine(romeCivilization.Finances);
 
 Console.WriteLine("Changing unit:");
-var uselessUnit = civilization.Units.Last();
-civilization.Units.Remove(uselessUnit);
-civilization.Units.Add(romeInfrastructureCivilizationFactory.CreateWorker());
-foreach (var unit in civilization.Units)
+var uselessUnit = romeCivilization.Units.Last();
+romeCivilization.Units.Remove(uselessUnit);
+romeCivilization.Units.Add(romeInfrastructureCivilizationFactory.CreateWorker());
+foreach (var unit in romeCivilization.Units)
 {
     Console.WriteLine(unit);
 }
