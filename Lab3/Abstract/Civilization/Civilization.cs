@@ -7,23 +7,35 @@ namespace Lab3.Abstract.Civilization;
 public class Civilization
 {
     private readonly ICivilizationInfrastructureFactory _civilizationInfrastructureFactory;
+    private List<Unit> _units = new List<Unit>();
+    private List<Territory> _territories = new List<Territory>();
 
     public Civilization(ICivilizationInfrastructureFactory civilizationInfrastructureFactory)
     {
         _civilizationInfrastructureFactory = civilizationInfrastructureFactory;
     }
 
-    public ICollection<Unit> Units { get; } = new List<Unit>();
-    public ICollection<Territory> Territories { get; } = new List<Territory>();
-    public Finances Finances { get; set; }
+    public IReadOnlyCollection<Unit> Units => _units;
+    public IReadOnlyCollection<Territory> Territories => _territories;
+    public Finances Finances { get; private set; }
 
-    public void InitializeDefaultValues()
+    public void CreateCitizens()
     {
-        Units.Add(_civilizationInfrastructureFactory.CreateAristocrat());
-        Units.Add(_civilizationInfrastructureFactory.CreateWorker());
-        Units.Add(_civilizationInfrastructureFactory.CreateWarrior());
-        Territories.Add(_civilizationInfrastructureFactory.CreateDwelling());
-        Territories.Add(_civilizationInfrastructureFactory.CreateWood());
+        _units.Add(_civilizationInfrastructureFactory.CreateAristocrat());
+        _units.Add(_civilizationInfrastructureFactory.CreateWorker());
+        _units.Add(_civilizationInfrastructureFactory.CreateWarrior());
+    }
+
+    public void CreateTerritories()
+    {
+        _territories.Add(_civilizationInfrastructureFactory.CreateDwelling());
+        _territories.Add(_civilizationInfrastructureFactory.CreateFactory());
+        _territories.Add(_civilizationInfrastructureFactory.CreateField());
+        _territories.Add(_civilizationInfrastructureFactory.CreateWood());
+    }
+
+    public void CreateFinances()
+    {
         Finances = _civilizationInfrastructureFactory.CreateFinances();
     }
 }
